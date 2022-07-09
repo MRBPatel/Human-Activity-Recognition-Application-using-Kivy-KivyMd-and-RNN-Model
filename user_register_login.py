@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from utils import DataBase
 
-_db = DataBase("db.db")
+_dbEngine = DataBase("db.db")
 
 
 
@@ -29,7 +29,7 @@ class UserLoginPage(BoxLayout):
         self._parent = _parent
 
     def login(self, username, password):
-        users = _db.selection(f"SELECT * FROM user", False)
+        users = _dbEngine.selection(f"SELECT * FROM user", False)
         for i in users:
             if i['username'] == username and i['password']:
                 Session.create(i)
@@ -54,8 +54,8 @@ class UserRegistrationPage(BoxLayout):
     def register_user(self):
         data = {key: self.ids[key].text for key in ("username", "password", "name",
                                                     "age", "movement_profile", "height", "weight", "job")}
-        if _db.insert("user", data):
-            print("user registration successfully")
+        if _dbEngine.save("user", data):
+            print("user registration successful")
             self.home()
 
         else:

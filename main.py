@@ -15,7 +15,7 @@ from utils import DataBase, RsaEncryption
 
 RsaEncryption.init()
 ActiveSensorData.init()
-_dbEngine = DataBase.init("db.db")
+_dbEngine = DataBase("db.db")
 analyser = ActivityRecogniser()
 
 Window.size = (320, 550)

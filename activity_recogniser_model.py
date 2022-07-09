@@ -7,7 +7,7 @@ import tensorflow as tf
 from kivy.clock import Clock
 from kivy.uix.modalview import ModalView
 from kivy.utils import platform
-# set-up plyer to read sensor data
+# set-up plyer to read sensor row
 from plyer import accelerometer
 
 
@@ -23,7 +23,7 @@ class ActiveSensorData():
                 print(e)
 
         else:
-            # set-up test data from file
+            # set-up test row from file
             f = open("test_data.txt", "r")
             data = f.readlines()
             f.close()

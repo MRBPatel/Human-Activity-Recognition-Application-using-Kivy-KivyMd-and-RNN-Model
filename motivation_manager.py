@@ -44,7 +44,7 @@ class MotivationManagerModel(ModalView):
         userid = Session.get_user()["id"]
         if source == "Save":
             data = {"userid": userid, "sitting": sitting, "walking": walking, "running": running, "continuous": continuous}
-            if _db.insert("motivation", data):
+            if _db.save("motivation", data):
                 self.set_message("tasks saved successfuly")
                 self.ids.btn_save.text = "Update"
             else:
