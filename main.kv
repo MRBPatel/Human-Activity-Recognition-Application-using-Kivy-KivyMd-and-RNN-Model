@@ -1,0 +1,1053 @@
+#:import utils kivy.utils
+
+<IconClick>:
+    background_color: 0,0,0,0
+    orientation     : 'vertical'
+    padding         : 1
+    color           : (1, 1, 1, 1)
+    size_hint       : 1,1
+    on_state        : root.on_click(self.state)
+
+
+<RoundedButton>:
+    background_color: 0,0,0,0
+    orientation     : 'vertical'
+    padding         : 1
+    color           : (1, 1, 1, 1)
+    size_hint       :1,1
+    on_state        : root.on_click(self.state)
+
+    Label:
+        id:lbl
+        size_hint_y:.01
+
+
+
+<UserLoginPage>:
+    size_hint:1,1
+    orientation:'vertical'
+    BoxLayout:
+        size_hint:1,None
+        height:34
+        orientation:'horizontal'
+        canvas.before:
+            Color:
+                rgba:(0.275, 0.639, 0.482, 1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        Label:
+            text:'Welcome to the App!'
+            font_size:18
+            bold:True
+            text_size:self.size
+            valign:'center'
+            halign:'center'
+
+    BoxLayout:
+        id:working_area
+        size_hint:1,1
+        padding:2
+        canvas.before:
+            Color:
+                rgba:(.9,.9,.9,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            id:welcome_page
+            size_hint:1,1
+            orientation:'vertical'
+            padding:15
+            spacing:5
+            BoxLayout:
+                size_hint:1,0.2
+                orientation:"vertical"
+                # height:40
+
+                Label:
+                    id:login_heading
+                    text:" Please login first"
+                    font_size:30
+                    bold:True
+                    text_size:self.size
+                    halign:'center'
+                    valign:'top'
+                    color:(0.275, 0.639, 0.482, 1)
+                Label:
+                    id:lbl_msg
+                    text:""
+                    font_size:12
+                    text_size:self.size
+                    halign:'center'
+                    valign:'center'
+                    color:(0.396, 0.6, 1,1)
+            BoxLayout:
+                size_hint:1,0.55
+                # height:0
+                padding:0
+                spacing:2
+                orientation:"vertical"
+                Label:
+                    id:lbl_username
+                    text:"Username:"
+                    size_hint:1,1
+                    font_size:17
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:33
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id  : username
+                        text: ''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+
+                Label:
+                    id:lbl_password
+                    text:"Password:"
+                    size_hint:1,1
+                    font_size:17
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:33
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id  : password
+                        text: ''
+                        multiline:False
+                        password:True
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    text:''
+                    size_hint:1,None
+                    height:40
+                RoundedButton:
+                    id      :btn_login
+                    args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                    text    :"Login"
+                    bold    :True
+                    font_size:15
+                    size_hint_y:None
+                    height:35
+                    on_press:root.login(username.text, password.text)
+                BoxLayout:
+                    orientation:'horizontal'
+                    size_hint:1,None
+                    height:30
+                    Label:
+                        text:"First time to our app?"
+                        size_hint:1,1
+                        color:(0,0,0,1)
+                    LabelButton:
+                        id:btn_register
+                        text:"Register"
+                        on_press:root.call_signup();
+
+            BoxLayout:
+                size_hint: 1,.30
+
+
+<UserRegistrationPage>:
+    size_hint:1,1
+    orientation:'vertical'
+    BoxLayout:
+        size_hint:1,None
+        height:34
+        orientation:'horizontal'
+        canvas.before:
+            Color:
+                rgba:(0.275, 0.639, 0.482, 1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        Label:
+            text:'Registration'
+            font_size:18
+            bold:True
+            text_size:self.size
+            valign:'center'
+            halign:'center'
+
+    BoxLayout:
+        id:working_area
+        size_hint:1,1
+        padding:1
+        canvas.before:
+            Color:
+                rgba:(.9,.9,.9,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            id:register_page
+            size_hint:1,1
+            orientation:'vertical'
+            padding:15
+            spacing:2
+
+            BoxLayout:
+                size_hint:1,0.87
+                # height:0
+                padding:2
+                spacing:2
+                orientation:"vertical"
+                Label:
+                    id:lbl_name
+                    text:"Name:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:name
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_age
+                    text:"Age:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    spacing:2
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:age
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_movement_profile
+                    text:"Movement Profile:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:movement_profile
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_height
+                    text:"Height:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:height
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_weight
+                    text:"Weight:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:weight
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_jd
+                    text:"Job"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:job
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_username
+                    text:"Username:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:username
+                        text:''
+                        multiline:False
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    id:lbl_password
+                    text:"Password:"
+                    size_hint:1,1
+                    font_size:15
+                    text_size:self.size
+                    halign:'left'
+                    valign:'center'
+                    color:(0, 0.431, 0.498, 1)
+                BoxLayout:
+                    size_hint:1,None
+                    height:28
+                    padding:0
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,1)
+                        RoundedRectangle:
+                            pos:self.pos
+                            size:self.size
+                            radius:[4.5]
+                    TextInput:
+                        id:password
+                        text:''
+                        multiline:False
+                        password:True
+                        background_color: 0,0,0,0
+                        foreground_color: 0,0,0,1
+                        font_size:15
+                Label:
+                    text:''
+                    size_hint:1,None
+                    height:20
+                RoundedButton:
+                    id      :btn_register
+                    args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                    text    :"Register"
+                    bold    :True
+                    font_size:15
+                    size_hint_y:None
+                    height:35
+                    on_press:root.register_user()
+
+
+
+            BoxLayout:
+                size_hint: 1,.05
+
+<MainDashboardPage>:
+    size_hint:1,1
+    orientation:'vertical'
+    BoxLayout:
+        size_hint:1,None
+        height:34
+        orientation:'horizontal'
+        canvas.before:
+            Color:
+                rgba:(0.294, 0.525, 0.451, 1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        IconClick:
+            id      :btn_back
+            args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[2]}
+            icon_source:'arrow.png'
+            size_hint_y:1
+            size_hint_x:None
+            width:30
+            on_press:root.call_login_form()
+
+        Label:
+            text:'Welcome'
+            font_size:18
+            bold:True
+            text_size:self.size
+            valign:'center'
+            halign:'center'
+
+        IconClick:
+            size_hint_x:None
+            width:30
+
+    BoxLayout:
+        id:working_area
+        size_hint:1,1
+        padding:0
+        canvas.before:
+            Color:
+                # rgba:(0.294, 0.525, 0.451,1)
+                rgba:(0.263, 0.227, 0.4,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            id:welcome_page
+            size_hint:1,1
+            orientation:'vertical'
+            padding:15
+            spacing:10
+            Label:
+                id:lbl_msg
+                text:''
+                size_hint:1,None
+                height:60
+                color:(0.922, 0.329, 0.392,1)
+
+            BoxLayout:
+                spacing: 10
+                padding: 15, 15,15,0
+                RoundedButton:
+                    id      :btn_checkin
+                    args    :{'normal':(0.275, 0.639, 0.482, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                    text    :"Check In"
+                    bold    :True
+                    padding : 10
+                    font_size:14
+                    size_hint_y:1
+                    on_press:root.checkin_analyser()
+
+
+                RoundedButton:
+                    id      :btn_checkout
+                    args    :{'normal':(0.275, 0.639, 0.482, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                    text    :"Check Out"
+                    bold    :True
+                    font_size:14
+                    size_hint_y:1
+                    on_press:root.checkout_analyser()
+
+            BoxLayout:
+                padding: 15
+                spacing: 10
+                RoundedButton:
+                    id      :btn_pause
+                    args    :{'normal':(0.922, 0.329, 0.392, 1), 'down':(0.878, 0.741, 0.192,1), 'size': self.size, 'anchor_x':'center', 'anchor_y': 'center', 'pos':self.pos, 'radius':[7]}
+                    text    :"Pause Notification"
+                    bold    :True
+                    font_size:14
+                    size_hint_y:1
+                    on_press:root.call_pause_modal()
+
+            RoundedButton:
+                id      :btn_motivational_task
+                args    :{'normal':(0.878, 0.741, 0.192, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Motivational Task"
+                bold    :True
+                font_size:14
+                size_hint_y:1
+                on_press:root.call_motivational_task_modal()
+
+            RoundedButton:
+                args    :{'normal':(0.8, 0.592, 0.322, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"View Graph"
+                bold    :True
+                font_size:14
+                size_hint_y:1
+                on_press:root.call_graph_modal()
+
+            RoundedButton:
+                id      :btn_motivational_task
+                args    :{'normal':(0.275, 0.639, 0.482, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Setting"
+                bold    :True
+                font_size:14
+                size_hint_y:1
+                on_press:root.call_settings()
+
+
+
+<MotivationManagerModel>:
+    size_hint:1,1
+    size_hint: 1.0, 0.6
+    auto_dismiss:False
+    id:popup_modal
+    orientation: "vertical"
+    padding:2
+    canvas.before:
+        Color:
+            rgba:(.9,.9,.9,.9)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    BoxLayout:
+        id:working_section
+        orientation: "vertical"
+        size_hint_x:1
+        size_hint_y:1
+        padding:3
+        spacing:5
+        canvas.before:
+            Color:
+                rgba:(0.9,0.9,0.9,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        BoxLayout:
+            size_hint:1,None
+            height:34
+            orientation:'horizontal'
+            canvas.before:
+                Color:
+                    rgba:(0.275, 0.639, 0.482, 1)
+                Rectangle:
+                    pos:self.pos
+                    size:self.size
+            Label:
+                text:'Motivation Task Manager'
+                font_size:18
+                bold:True
+                text_size:self.size
+                valign:'center'
+                halign:'center'
+
+        Label:
+            id:task_msg
+            text:""
+            text_size:self.size
+            halign:"center"
+            valign:"center"
+            font_size:15
+            color:(0.922, 0.329, 0.392,1)
+            size_hint:1,None
+            height:40
+        BoxLayout:
+            orientation:"vertical"
+            size_hint:1,1
+            padding:0.5
+            Label:
+                id:lbl_sitting
+                text:"Motivation For Sitting:"
+                size_hint:1,1
+                font_size:15
+                text_size:self.size
+                halign:'left'
+                valign:'center'
+                color:(0,0,0,1)
+            BoxLayout:
+                size_hint:1,None
+                height:33
+                padding:0
+                canvas.before:
+                    Color:
+                        rgba:(1,1,1,1)
+                    RoundedRectangle:
+                        pos:self.pos
+                        size:self.size
+                        radius:[4.5]
+                TextInput:
+                    id:sitting
+                    text:''
+                    multiline:False
+                    background_color: 0,0,0,0
+                    foreground_color: 0,0,0,1
+                    font_size:15
+            Label:
+                id:lbl_walking
+                text:"Motivation For Walking:"
+                size_hint:1,1
+                font_size:15
+                text_size:self.size
+                halign:'left'
+                valign:'center'
+                color:(0,0,0,1)
+            BoxLayout:
+                size_hint:1,None
+                height:33
+                padding:0
+                canvas.before:
+                    Color:
+                        rgba:(1,1,1,1)
+                    RoundedRectangle:
+                        pos:self.pos
+                        size:self.size
+                        radius:[4.5]
+                TextInput:
+                    id:walking
+                    text:''
+                    multiline:False
+                    background_color: 0,0,0,0
+                    foreground_color: 0,0,0,1
+                    font_size:15
+            Label:
+                id:lbl_running
+                text:"Motivation For Running:"
+                size_hint:1,1
+                font_size:15
+                text_size:self.size
+                halign:'left'
+                valign:'center'
+                color:(0,0,0,1)
+            BoxLayout:
+                size_hint:1,None
+                height:33
+                padding:0
+                canvas.before:
+                    Color:
+                        rgba:(1,1,1,1)
+                    RoundedRectangle:
+                        pos:self.pos
+                        size:self.size
+                        radius:[2.5]
+                TextInput:
+                    id:running
+                    text:''
+                    multiline:False
+                    background_color: 0,0,0,0
+                    foreground_color: 0,0,0,1
+                    font_size:15
+            Label:
+                id:lbl_continuous
+                text:"Motivation to do movement:"
+                size_hint:1,1
+                font_size:15
+                text_size:self.size
+                halign:'left'
+                valign:'center'
+                color:(0,0,0,1)
+            BoxLayout:
+                size_hint:1,None
+                height:33
+                padding:0
+                canvas.before:
+                    Color:
+                        rgba:(1,1,1,1)
+                    RoundedRectangle:
+                        pos:self.pos
+                        size:self.size
+                        radius:[4.5]
+                TextInput:
+                    id:continuous
+                    text:''
+                    multiline:False
+                    background_color: 0,0,0,0
+                    foreground_color: 0,0,0,1
+                    font_size:15
+
+        BoxLayout:
+            orientation:"horizontal"
+            size_hint:1,None
+            height:40
+            spacing:2
+            padding:2
+            RoundedButton:
+                id      :btn_save
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Save"
+                bold    :True
+                font_size:15
+                size_hint_y:None
+                height:35
+                on_release:root.save_tasks(self.text, sitting.text, walking.text, running.text)
+            RoundedButton:
+                id      :btn_close
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Close"
+                bold    :True
+                font_size:15
+                color:(0.545, 0, 0, 1)
+                size_hint_y:None
+                height:35
+                on_press:root.close_model()
+
+
+<PauseModel>:
+    size_hint:1,1
+    size_hint: 0.5, 0.4
+    auto_dismiss:False
+    id:popup_modal
+    orientation: "vertical"
+    padding:2
+    canvas.before:
+        Color:
+            rgba:(.9,.9,.9,.9)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    BoxLayout:
+        id:working_section
+        orientation: "vertical"
+        size_hint_x:1
+        size_hint_y:1
+        padding:1
+        spacing:5
+        canvas.before:
+            Color:
+                rgba:(1,1,1,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        BoxLayout:
+            size_hint:1,None
+            height:34
+            orientation:'horizontal'
+            canvas.before:
+                Color:
+                    rgba:(0.275, 0.639, 0.482, 1)
+                Rectangle:
+                    pos:self.pos
+                    size:self.size
+            Label:
+                text:'Pause'
+                font_size:18
+                bold:True
+                text_size:self.size
+                valign:'center'
+                halign:'center'
+
+        Label:
+            id:task_msg
+            text:""
+            text_size:self.size
+            halign:"center"
+            valign:"center"
+            font_size:15
+            color:(0,0,1,1)
+            size_hint:1,None
+            height:40
+        BoxLayout:
+            orientation : "vertical"
+
+            BoxLayout:
+                CheckBox:
+                    id          : 2
+                    size_hint_x : 0.2
+                    group       : "pause"
+
+
+                Label:
+                    id  : lbl_pause_2
+                    size_hint_x : 0.8
+                    text: "Pause For 2"
+                    color:0,0,1,1
+            BoxLayout:
+                CheckBox:
+                    id      : 3
+                    size_hint_x : 0.2
+                    group   : "pause"
+
+
+                Label:
+                    id  : lbl_pause_3
+                    size_hint_x : 0.8
+                    text: "Pause For 3"
+                    color:0,0,1,1
+            BoxLayout:
+                CheckBox:
+                    id      : 5
+                    size_hint_x : 0.2
+                    group   : "pause"
+
+
+                Label:
+                    id  : lbl_pause_5
+                    size_hint_x : 0.8
+                    text: "Pause For 5"
+                    color:0,0,1,1
+        BoxLayout:
+            orientation:"horizontal"
+            size_hint:1,None
+            height:40
+            spacing:2
+            padding:2
+            RoundedButton:
+                id      :btn_save
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Save"
+                bold    :True
+                font_size:15
+                size_hint_y:None
+                height:35
+            RoundedButton:
+                id      :btn_close
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Close"
+                bold    :True
+                font_size:15
+                color:(1,0,0,1)
+                size_hint_y:None
+                height:35
+                on_press:root.close_model()
+
+
+<Graph>:
+    size_hint:1,1
+    size_hint: 0.8, 0.6
+    auto_dismiss:False
+    orientation: "vertical"
+    padding:2
+    canvas.before:
+        Color:
+            rgba:(.9,.9,.9,.9)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    BoxLayout:
+        id:working_section
+        orientation: "vertical"
+        size_hint_x:1
+        size_hint_y:1
+        padding:3
+        spacing:5
+        canvas.before:
+            Color:
+                rgba:(0.9,0.9,0.9,1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            size_hint_y : 0.2
+            padding     : 5
+            spacing     : 5
+            RoundedButton:
+                id      : daily
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Daily"
+                bold    :True
+                font_size:15
+                color:(0.973, 0.973, 1, 1)
+                size_hint_y:None
+                height:35
+                on_press:root.display_graph(id)
+            RoundedButton:
+                id      :weekly
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Weekly"
+                bold    :True
+                font_size:15
+                color:(0.973, 0.973, 1, 1)
+                size_hint_y:None
+                height:35
+                on_press:root.display_graph(weekly)
+            RoundedButton:
+                id      :monthly
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Monthly"
+                bold    :True
+                font_size:15
+                color:(0.973, 0.973, 1, 1)
+                size_hint_y:None
+                height:35
+                on_press:root.display_graph(id)
+        BoxLayout:
+            id          : graph
+            size_hint_y : 0.6
+            padding     : 5
+            spacing     : 5
+            canvas.before:
+                Color:
+                    rgba:(.9,.9,.9,.9)
+                Rectangle:
+                    pos:self.pos
+                    size:self.size
+
+        BoxLayout:
+            size_hint_y:0.2
+            padding:2
+            RoundedButton:
+                id      :btn_close
+                args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
+                text    :"Close"
+                bold    :True
+                font_size:15
+                color:(0.502, 0, 0.125, 1)
+                size_hint_y:None
+                height:35
+                on_press:root.close_model()
+
+
+<Settings>:
+    size_hint   : (0.9, 0.65)
+    auto_dismiss: False
+    BoxLayout:
+        orientation : "vertical"
+        TextInput:
+            id          : name
+            multiline   : False
+            text        : ""
+            hint_text   : "Name"
+
+        TextInput:
+            id          : age
+            multiline   : False
+            text        : ""
+            hint_text   : "Age"
+
+        TextInput:
+            id          : weight
+            multiline   : False
+            text        : ""
+            hint_text   : "Weight"
+
+        TextInput:
+            id          : height
+            multiline   : False
+            text        : ""
+            hint_text   : "Height"
+
+        TextInput:
+            id          : position
+            multiline   : False
+            text        : ""
+            hint_text   : "Job Position"
+
+        TextInput:
+            id          : profile
+            multiline   : False
+            text        : ""
+            hint_text   : "Movement Profile"
+
+        BoxLayout:
+            Button:
+                id          : btn_action
+                text        : "Save"
+                on_release  : root.save_records(self.text)
+
+            Button:
+                text        : "Close"
+                on_release  : root.close_popup()
+
+
+
+<Main>:
+    size_hint:1,1
+    padding:0
+    spacing:0
+    orientation:"vertical"
+    canvas.before:
+        Color:
+            rgba:(1,1,1,1)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
+
+    BoxLayout:
+        id:dynamic_box
+        size_hint:1,1
+        padding:0
+        orientation:'vertical'
