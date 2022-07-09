@@ -357,7 +357,7 @@
                         foreground_color: 0,0,0,1
                         font_size:15
                 Label:
-                    id:lbl_jd
+                    id:lbl_jb
                     text:"Job"
                     size_hint:1,1
                     font_size:15
@@ -980,46 +980,74 @@
                 on_press:root.close_model()
 
 
-<Settings>:
+<Setting>:
     size_hint   : (0.9, 0.65)
     auto_dismiss: False
     BoxLayout:
         orientation : "vertical"
         TextInput:
+            id          : notifications
+            multiline   : False
+            text        : ""
+            hint_text   : "# Notifications"
+
+        Label:
+            text:'Notification'
+            font_size: 12
+
+        TextInput:
             id          : name
             multiline   : False
             text        : ""
             hint_text   : "Name"
+        Label:
+            text:'Name'
+            font_size: 12
 
         TextInput:
             id          : age
             multiline   : False
             text        : ""
             hint_text   : "Age"
+        Label:
+            text:'Age'
+            font_size: 12
 
         TextInput:
             id          : weight
             multiline   : False
             text        : ""
             hint_text   : "Weight"
+        Label:
+            text:'Weight'
+            font_size: 12
 
         TextInput:
             id          : height
             multiline   : False
             text        : ""
             hint_text   : "Height"
+        Label:
+            text:'Height'
+            font_size: 12
 
         TextInput:
             id          : position
             multiline   : False
             text        : ""
             hint_text   : "Job Position"
+        Label:
+            text:'Job Position'
+            font_size: 12
 
         TextInput:
             id          : profile
             multiline   : False
             text        : ""
             hint_text   : "Movement Profile"
+        Label:
+            text:'Movement Profile'
+            font_size: 12
 
         BoxLayout:
             Button:

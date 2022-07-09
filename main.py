@@ -6,7 +6,7 @@ from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 
 import permission_sensors
-from activity_recogniser_model import ActiveSensorData, ActivityRecogniser
+from activity_recogniser_model import ActiveSensorData, ActivityRecogniser, PauseModel
 from graph import Graph
 from user_register_login import UserLoginPage, UserRegistrationPage, Session
 from motivation_manager import MotivationManagerModel
@@ -15,7 +15,7 @@ from utils import DataBase, RsaEncryption
 
 RsaEncryption.init()
 ActiveSensorData.init()
-_db = DataBase("db.db")
+_dbEngine = DataBase.init("db.db")
 analyser = ActivityRecogniser()
 
 Window.size = (320, 550)
@@ -45,7 +45,7 @@ class MainDashboardPage(BoxLayout):
     def read_motivation_task(self, key):
         try:
             userid = Session.get_user()['id']
-            tasks = _db.selection(f"SELECT * FROM motivation WHERE userid='{userid}'", True)
+            tasks = _dbEngine.selection(f"SELECT * FROM motivation WHERE userid='{userid}'", True)
             return tasks[key.lower()]
 
         except Exception as error:
@@ -98,7 +98,7 @@ class MainDashboardPage(BoxLayout):
         self.PAUSE = not self.PAUSE
 
     def call_settings(self):
-        return Settings()
+        return Setting(self).show()
 
 
 
@@ -115,40 +115,14 @@ class SystemPermission(Screen):
         permission_sensors.memoryAccess
 
 
-class PauseModel(ModalView):
-    def __init__(self, _parent, **kwargs):
-        super().__init__(**kwargs)
-        self._parent = _parent
-        self._ignore = False
-
-    def on_option(self, value, task):
-        if self._ignore:
-            self._ignore = False
-            return
-
-        if value:
-            keys = ["2", "3", "4"]
-            t = task.split("_")[1]
-            keys.remove(t)
-            data = {t: self.ids[task].text}
-            for key in keys:
-                data[key] = ""
-
-    def close_model(self):
-        self.dismiss()
-
-
-
-
-
-class Settings(ModalView):
+class Setting(ModalView):
     def __init__(self, main_parent, **kwargs) -> None:
-        super(Settings, self).__init__(**kwargs)
+        super(Setting, self).__init__(**kwargs)
         self._main_parent = main_parent
 
     def _read_records(self):
         """ read & populate records from database table """
-        data = _db.read("user")
+        data = _dbEngine.read("user")
         if data is not None:
             for key, val in data.items():
                 self.ids[key].text = val
@@ -161,17 +135,17 @@ class Settings(ModalView):
 
     def save_records(self, type):
         """ save records into the database
-            # >>> @param:type -> [Save/Update] flag to decide db operation
+            >>> @param:type -> [Save/Update] flag to decide db operation
         """
         data = {}
-        for key in ("name", "age", "height", "position", "profile"):
+        for key in ("username", "age", "weight", "height", "job"):
             data[key] = self.ids[key].text
 
         if type == "Save":
-            _db.save("user", data)
+            _dbEngine.save("user", data)
 
         else:
-            _db.update("user", data)
+            _dbEngine.update("user", data)
 
         self.close_popup()
 

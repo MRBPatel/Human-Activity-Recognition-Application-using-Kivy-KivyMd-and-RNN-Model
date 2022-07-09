@@ -1,13 +1,14 @@
-import numpy as np
-from threading import Thread
-from kivy.clock import Clock
-from functools import partial
-import tensorflow as tf
 import random
-from kivy.utils import platform
+from functools import partial
+from threading import Thread
 
+import numpy as np
+import tensorflow as tf
+from kivy.clock import Clock
+from kivy.uix.modalview import ModalView
+from kivy.utils import platform
 # set-up plyer to read sensor data
-from plyer import notification, vibrator, tts, email, accelerometer
+from plyer import accelerometer
 
 
 class ActiveSensorData():
@@ -63,7 +64,8 @@ class ActiveSensorData():
             except Exception as e:
                 print(e)
                 return np.array([np.random.random_sample( (num_samples, 3) )], dtype=np.float32)
-    
+
+
 class ActivityRecogniser():
     def __init__(self) -> None:
         self._load_analyser()
@@ -71,13 +73,13 @@ class ActivityRecogniser():
 
     def _load_analyser(self):
         try:
-            self._analyser             = tf.lite.Interpreter(model_path="activity_recogniser_model.tflite")
+            self._analyser = tf.lite.Interpreter(model_path="activity_recogniser_model.tflite")
             self._analyser.allocate_tensors()
-            self._input_details     = self._analyser.get_input_details()
-            self._output_details    = self._analyser.get_output_details()
+            self._input_details = self._analyser.get_input_details()
+            self._output_details = self._analyser.get_output_details()
         
-        except Exception as e:
-            print(e)
+        except Exception as error:
+            print(error)
             self._analyser = None
 
     def analyse(self, data, callback):
@@ -85,22 +87,21 @@ class ActivityRecogniser():
             result = None
             try:
                 if self._analyser is not None:
-                    self._analyser.set_tensor  (self._input_details[0]['index'], d)
-                    self._analyser.invoke      ()
-                    lbls    = self._analyser.get_tensor(self._output_details[0]['index'])[0]
+                    self._analyser.set_tensor(self._input_details[0]['index'], d)
+                    self._analyser.invoke()
+                    lbls = self._analyser.get_tensor(self._output_details[0]['index'])[0]
                     cls_idx = np.argmax(np.array([lbls]))
                     result = self._labels[cls_idx]
                 else:
                     print("analyser not available")
-            
-            except Exception as e:
-                print(e)
+
+            except Exception as error:
+                print(error)
             Clock.schedule_once(partial(calbk, result), 0.5)
 
         self._job_thread = Thread(target=job, args=(data, callback))
         self._job_thread.setDaemon(True)
         self._job_thread.start()
-
 
 
 if __name__ == "__main__":
@@ -111,4 +112,27 @@ if __name__ == "__main__":
     analyser   = ActivityRecogniser()
     print( analyser.analyse(ActiveSensorData.data_sequence(90), func ) )
     input("_")
-    
+
+
+class PauseModel(ModalView):
+    def __init__(self, _parent, **kwargs):
+        super().__init__(**kwargs)
+        self._parent = _parent
+        self._ignore = False
+
+    def on_option(self, value, task):
+        if self._ignore:
+            self._ignore = False
+            return
+
+        if value:
+            keys = ["1", "3", "5"]
+            t = task.split("_")[1]
+            keys.remove(t)
+            data = {t: self.ids[task].text}
+            for key in keys:
+                data[key] = ""
+
+    def close_model(self):
+        self.dismiss()
+
