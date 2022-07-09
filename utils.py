@@ -65,7 +65,6 @@ class RsaEncryption():
     @classmethod
     def decrypt(cls, data):
         def _decrypt(bytes_data):
-            # return cls._private_key.decrypt( bytes(bytes_data, 'utf-8') , padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(),label=None) )#.decode("utf-8")
             if type(bytes_data) is bytes:
                 return cls._private_key.decrypt(bytes_data, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                                          algorithm=hashes.SHA256(),
@@ -91,6 +90,14 @@ class RsaEncryption():
 class DataBase():
     def __init__(self, filepath):
         self._file = filepath
+
+    def _decrypt(cls, bytes_data):
+        if type(bytes_data) is bytes:
+            return cls._private_key.decrypt(bytes_data, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                                     algorithm=hashes.SHA256(),
+                                                                     label=None)).decode()
+        else:
+            return bytes_data
 
     def _connection(self):
         if not os.path.exists(self._file):
@@ -122,6 +129,38 @@ class DataBase():
                 cursor.close()
                 conn.close()
                 return data
+
+    def read(self, table):
+        """ read settings from database table """
+        connection = self._connection()
+        if connection is None:
+            print("can't read data - no connection is available")
+            return None
+
+        cursor = connection.cursor()
+        data = None
+        try:
+
+            query = f'SELECT * FROM {table}'
+            cursor.execute(query)
+
+            # fetch all records
+            data = cursor.fetchall()[0]
+            # read column names from cursor
+            cols = [item[0] for item in cursor.description]
+            # convert data to dictionary
+            data = {key: val for key, val in zip(cols, data)}
+            # decrypt data
+            data = self._decrypt(data)
+            return data
+
+        except Exception as e:
+            print(f'[EXCEPTION] {e}')
+
+        finally:
+            cursor.close()
+            connection.close()
+            return data
 
     def save(self, tablename, row):
         conn = self._connection()

@@ -639,8 +639,8 @@
             size_hint:1,1
             padding:0.5
             Label:
-                id:lbl_sitting
-                text:"Motivation For Sitting:"
+                id:lbl_continuous
+                text:"Motivation- 1"
                 size_hint:1,1
                 font_size:15
                 text_size:self.size
@@ -661,13 +661,14 @@
                 TextInput:
                     id:sitting
                     text:''
+                    hint_text: "sitting motivation"
                     multiline:False
                     background_color: 0,0,0,0
                     foreground_color: 0,0,0,1
                     font_size:15
             Label:
-                id:lbl_walking
-                text:"Motivation For Walking:"
+                id:lbl_continuous
+                text:"Motivation- 2"
                 size_hint:1,1
                 font_size:15
                 text_size:self.size
@@ -688,13 +689,14 @@
                 TextInput:
                     id:walking
                     text:''
+                    hint_text:"walking motivation"
                     multiline:False
                     background_color: 0,0,0,0
                     foreground_color: 0,0,0,1
                     font_size:15
             Label:
-                id:lbl_running
-                text:"Motivation For Running:"
+                id:lbl_continuous
+                text:"Motivation- 3"
                 size_hint:1,1
                 font_size:15
                 text_size:self.size
@@ -715,13 +717,14 @@
                 TextInput:
                     id:running
                     text:''
+                    hint_text:"Running motivation"
                     multiline:False
                     background_color: 0,0,0,0
                     foreground_color: 0,0,0,1
                     font_size:15
             Label:
                 id:lbl_continuous
-                text:"Motivation to do movement:"
+                text:"Motivation- 4"
                 size_hint:1,1
                 font_size:15
                 text_size:self.size
@@ -742,6 +745,7 @@
                 TextInput:
                     id:continuous
                     text:''
+                    hint_text:'Motivation to be active'
                     multiline:False
                     background_color: 0,0,0,0
                     foreground_color: 0,0,0,1
@@ -986,13 +990,14 @@
     BoxLayout:
         orientation : "vertical"
         TextInput:
-            id          : notifications
+            id          : username
             multiline   : False
             text        : ""
-            hint_text   : "# Notifications"
+            hint_text   : "# Username"
 
         Label:
-            text:'Notification'
+            id: lbl_username
+            text:'Username'
             font_size: 12
 
         TextInput:
@@ -1001,6 +1006,7 @@
             text        : ""
             hint_text   : "Name"
         Label:
+            id: lbl_name
             text:'Name'
             font_size: 12
 
@@ -1010,6 +1016,7 @@
             text        : ""
             hint_text   : "Age"
         Label:
+            id: lbl_age
             text:'Age'
             font_size: 12
 
@@ -1019,6 +1026,7 @@
             text        : ""
             hint_text   : "Weight"
         Label:
+            id: lbl_weight
             text:'Weight'
             font_size: 12
 
@@ -1028,27 +1036,19 @@
             text        : ""
             hint_text   : "Height"
         Label:
+            id: lbl_height
             text:'Height'
             font_size: 12
 
         TextInput:
-            id          : position
+            id          : job
             multiline   : False
             text        : ""
             hint_text   : "Job Position"
         Label:
+            id: lbl_job
             text:'Job Position'
             font_size: 12
-
-        TextInput:
-            id          : profile
-            multiline   : False
-            text        : ""
-            hint_text   : "Movement Profile"
-        Label:
-            text:'Movement Profile'
-            font_size: 12
-
         BoxLayout:
             Button:
                 id          : btn_action
@@ -1056,6 +1056,7 @@
                 on_release  : root.save_records(self.text)
 
             Button:
+                id : lbl_close
                 text        : "Close"
                 on_release  : root.close_popup()
 
