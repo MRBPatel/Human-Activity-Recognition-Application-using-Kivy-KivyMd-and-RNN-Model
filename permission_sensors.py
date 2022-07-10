@@ -33,7 +33,3 @@ def memoryAccess():
         from android.permissions import request_permissions, Permission
 
         request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
-
-
-
-
