@@ -7,7 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.image import Image
 
 
-class RoundedButton(BoxLayout, Button):
+class RoundedButton(BoxLayout, Button): # creating class to settingUp Round shape button and backgroud
     def __init__(self, **kwargs) -> None:
         super(RoundedButton, self).__init__()
         self.canvas.clear()
@@ -49,7 +49,7 @@ class RoundedButton(BoxLayout, Button):
 
     @icon_source.setter
     def icon_source(self, value):
-        """ set image source in case Circle Button is using icon"""
+        """ setting image source so that icon can be use as icon """
         if self._image is None:
 
             self._image = Image()
@@ -138,11 +138,11 @@ Builder.load_string(
     text_size:self.size
     bold: True
     font_size:14
+    valign:'middle'
+    halign:'center'
     size_hint_y:None
     height:30
     color:(1,1,1,1)
-    valign:'middle'
-    halign:'center'
     canvas.before:
         Color:
             rgba: (0.92,0.96,0.97,.9) if self.state=='normal' else (0.2,.7,.7,1)

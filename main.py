@@ -6,12 +6,12 @@ from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 
 import permission_sensors
-from activity_recogniser_model import ActiveSensorData, ActivityRecogniser, PauseModel
+from activity_recogniser_model import ActiveSensorData, ActivityRecogniser
 from graph import Graph
+from buttons_icon_css import RoundedButton
 from user_register_login import UserLoginPage, UserRegistrationPage, Session
 from motivation_manager import MotivationManagerModel
-from buttons_icon_css import RoundedButton
-from utils import DataBase, RsaEncryption
+from db_engine import DataBase, RsaEncryption
 
 RsaEncryption.init()
 ActiveSensorData.init()
@@ -20,8 +20,12 @@ analyser = ActivityRecogniser()
 
 Window.size = (320, 550)
 
+""" Main Dashboard of the app, here calling all the created function in order to
+ use in main screen"""
+
 
 class MainDashboardPage(BoxLayout):
+
     def __init__(self, _parent, **kwargs):
         super().__init__(**kwargs)
         self._parent = _parent
@@ -44,7 +48,7 @@ class MainDashboardPage(BoxLayout):
 
     def read_motivation_task(self, key):
         try:
-            userid = Session.get_user()['id']
+            userid = Session.get_user()['user_id']
             tasks = _dbEngine.selection(f"SELECT * FROM motivation WHERE userid='{userid}'", True)
             return tasks[key.lower()]
 
@@ -87,70 +91,80 @@ class MainDashboardPage(BoxLayout):
         Session.clear()
         self._parent.homepage()
 
-    def call_motivational_task_modal(self):
+    def call_motivational_task_model(self):
         popup = MotivationManagerModel(self)
         popup.load_modal()
 
-    def call_graph_modal(self):
+    def call_graph_model(self):
         Graph().open()
 
     def call_pause_modal(self):
         self.PAUSE = not self.PAUSE
 
     def call_settings(self):
-        return Setting(self).show()
+        pp = Setting(self)
+        pp.show()
 
 
-
-# classes reperesenting systemPermission
-class SystemPermission(Screen):
-
-    def allowAccelerometer(self):
-        permission_sensors.allowAccelero
-
-    def allowGyrometer(self):
-        permission_sensors.allowGyro
-
-    def allowStorage(self):
-        permission_sensors.memoryAccess
-
-
-class Setting(ModalView):
-    def __init__(self, main_parent, **kwargs) -> None:
-        super(Setting, self).__init__(**kwargs)
-        self._main_parent = main_parent
+class Setting(ModalView):  # creating class to edit user details
+    def __init__(self, _parent, **kwargs):
+        super().__init__(**kwargs)
+        self._parent = _parent
 
     def _read_records(self):
         """ read & populate records from database table """
-        data = _dbEngine.read("user")
-        if data is not None:
-            for key, val in data.items():
-                self.ids[key].text = val
-            self.ids.btn_action.text = "Update"
+
+        try:
+            userid = Session.get_user()['user_id']
+            data = _dbEngine.selection(f"SELECT * FROM user WHERE user_id='{userid}'", True)
+            return data
+
+        except Exception as error:
+            print(error)
 
     def show(self):
         """ display setting popup """
-        self._read_records()
-        self.open()
+        data = self._read_records()
+        if data is not None:
+            for key in ("name", "username", "weight", "height", "age", "job"):
+                self.ids[key].text = data[key]
+                self.ids.btn_action.text = "update"
 
-    def save_records(self, type):
-        """ save records into the database
-            >>> @param:type -> [Save/Update] flag to decide db operation
-        """
-        data = {}
-        for key in ("username", "age", "weight", "height", "job"):
-            data[key] = self.ids[key].text
+            self.open()
 
-        if type == "Save":
-            _dbEngine.save("user", data)
+    def set_message(self, message):
+        t = message
+        return t
+
+    def save_records(self, source, name, age, height, weight, job, username):
+        userid = Session.get_user()["user_id"]
+        if source == "Save":
+            data = {"user_id": userid, "name": name, "age": age, "height": height, "weight": weight, "job": job,
+                    "username": username}
+            if _dbEngine.save("user", data):
+                self.set_message("user data saved successfuly")
+                self.ids.btn_action.text = "save"
+                self._parent.load_dashboard_page()
+
+            else:
+                self.set_message("failed to save data - try again")
 
         else:
-            _dbEngine.update("user", data)
+            data = {"user_id": userid, "name": name, "age": age, "height": height, "weight": weight, "job": job,
+                    "username": username}
+            if _dbEngine.update("user", data, f"userid='{userid}'"):
+                self.set_message("user data updated successfully")
+                self.ids.btn_action.text = "Update"
+                self._parent.load_dashboard_page()
 
-        self.close_popup()
 
-    def close_popup(self):
+            else:
+                self.set_message("error updating user data")
+
+    def close_model(self):
         self.dismiss()
+        self.ids.btn_action.text = "save"
+        self.set_message("")
 
 
 class Main(BoxLayout):
@@ -166,7 +180,7 @@ class Main(BoxLayout):
         self.register_page = UserRegistrationPage(self)
 
         self.dynamic_area.clear_widgets()
-        if self.admin_register == True:
+        if self.admin_register:
             self.dynamic_area.add_widget(self.login_form)
         else:
             self.dynamic_area.add_widget(self.register_page)

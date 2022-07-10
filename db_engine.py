@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
 
+# Using this class rsa encryption has been done using private key form file "key.pem"
 class RsaEncryption():
     _file = "key.pem"
 
@@ -46,7 +47,7 @@ class RsaEncryption():
             if type(data_str) is str:
                 return cls._public_key.encrypt(bytes(data_str, 'utf-8'),
                                                padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                                                            algorithm=hashes.SHA256(), label=None))  # .decode("utf-8")
+                                                            algorithm=hashes.SHA256(), label=None))
             else:
                 return data_str
 
@@ -86,7 +87,7 @@ class RsaEncryption():
 
         return data
 
-
+# making database accessible for this project
 class DataBase():
     def __init__(self, filepath):
         self._file = filepath
@@ -162,7 +163,7 @@ class DataBase():
             connection.close()
             return data
 
-    def save(self, tablename, row):
+    def save(self, table, row):
         conn = self._connection()
         if conn is None:
             print("db connection not available");
@@ -172,9 +173,7 @@ class DataBase():
                 result = False
                 cols = ", ".join([col for col in row.keys()])
                 row = RsaEncryption.encrypt(row)
-                # vals 	= tuple( [f"'{val}'" for val in row.values()] )
-                # query 	= "INSERT INTO {}({}) VALUES{}".format(tablename, cols, vals)
-                query = "INSERT INTO {}({}) VALUES({})".format(tablename, cols,
+                query = "INSERT INTO {}({}) VALUES({})".format(table, cols,
                                                                ", ".join(["?"] * len(row.values())))
                 cursor = conn.cursor()
                 cursor.execute(query, tuple(row.values()))

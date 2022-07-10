@@ -1,0 +1,6 @@
+Kivy==2.1.0
+numpy==1.23.0
+matplotlib==3.5.2
+cryptography==37.0.4
+plyer==2.0.0
+tensorflow==2.9.1

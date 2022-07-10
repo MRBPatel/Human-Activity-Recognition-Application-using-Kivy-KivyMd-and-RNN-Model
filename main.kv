@@ -558,7 +558,7 @@
                 bold    :True
                 font_size:14
                 size_hint_y:1
-                on_press:root.call_motivational_task_modal()
+                on_press:root.call_motivational_task_model()
 
             RoundedButton:
                 args    :{'normal':(0.8, 0.592, 0.322, 1),'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
@@ -566,7 +566,7 @@
                 bold    :True
                 font_size:14
                 size_hint_y:1
-                on_press:root.call_graph_modal()
+                on_press:root.call_graph_model()
 
             RoundedButton:
                 id      :btn_motivational_task
@@ -765,7 +765,7 @@
                 font_size:15
                 size_hint_y:None
                 height:35
-                on_release:root.save_tasks(self.text, sitting.text, walking.text, running.text)
+                on_release:root.save_tasks(self.text, sitting.text, walking.text, running.text, continuous.text)
             RoundedButton:
                 id      :btn_close
                 args    :{'normal':(0.275, 0.639, 0.482, 1), 'down':(0.878, 0.741, 0.192,1), 'size':self.size, 'pos':self.pos, 'radius':[7]}
@@ -988,6 +988,12 @@
     size_hint   : (0.9, 0.65)
     auto_dismiss: False
     BoxLayout:
+        canvas.before:
+            Color:
+                rgba:(0.275, 0.639, 0.482, 1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
         orientation : "vertical"
         TextInput:
             id          : username
@@ -999,6 +1005,7 @@
             id: lbl_username
             text:'Username'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
 
         TextInput:
             id          : name
@@ -1009,6 +1016,7 @@
             id: lbl_name
             text:'Name'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
 
         TextInput:
             id          : age
@@ -1019,6 +1027,7 @@
             id: lbl_age
             text:'Age'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
 
         TextInput:
             id          : weight
@@ -1029,6 +1038,7 @@
             id: lbl_weight
             text:'Weight'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
 
         TextInput:
             id          : height
@@ -1039,6 +1049,7 @@
             id: lbl_height
             text:'Height'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
 
         TextInput:
             id          : job
@@ -1049,16 +1060,28 @@
             id: lbl_job
             text:'Job Position'
             font_size: 12
+            color: (0, 0.431, 0.498, 1)
         BoxLayout:
+            size_hint_y:0.2
+            padding:2
             Button:
-                id          : btn_action
-                text        : "Save"
-                on_release  : root.save_records(self.text)
-
+                id      :btn_action
+                color: (0.275, 0.639, 0.482, 1)
+                text    :"Close"
+                bold    :True
+                font_size:15
+                size_hint_y:None
+                height:35
+                on_press:root.close_model()
             Button:
-                id : lbl_close
-                text        : "Close"
-                on_release  : root.close_popup()
+                id      :btn_close
+                color: (0.275, 0.639, 0.482, 1)
+                text    :"Close"
+                bold    :True
+                font_size:15
+                size_hint_y:None
+                height:35
+                on_press:root.close_model()
 
 
 

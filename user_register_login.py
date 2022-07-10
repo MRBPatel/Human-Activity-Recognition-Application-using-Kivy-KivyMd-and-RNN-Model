@@ -1,9 +1,8 @@
 from kivy.uix.boxlayout import BoxLayout
 
-from utils import DataBase
+from db_engine import DataBase
 
 _dbEngine = DataBase("db.db")
-
 
 
 class Session:
@@ -21,6 +20,8 @@ class Session:
     def clear(cls):
         cls._user = None
 
+
+"""Using UserLoginPage class user can login to the app """
 
 
 class UserLoginPage(BoxLayout):
@@ -44,6 +45,9 @@ class UserLoginPage(BoxLayout):
         self._parent.load_signup()
 
     # Builder.load_string("""
+
+
+"""Using this class user can register with their details"""
 
 
 class UserRegistrationPage(BoxLayout):
