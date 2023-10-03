@@ -42,8 +42,19 @@ Follow these steps to install and run the Human Activity Recognizer app on your 
 
 4. You can view your activity history and statistics within the app.
 
+## Snipets
+![login_page](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/c27f2aee-1beb-451d-8b76-f812238afa0b)
+![home_page](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/2a30adda-7c58-4d8f-a8a5-3389c246d238)
+![output_3](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/11e99bb3-b8e0-4083-b49b-8f124bad1862)
+![output_4](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/e1a1efa5-3c08-462c-b24d-7af9bbf146a9)
+![output_5](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/e1fb1f18-7a61-488d-8115-9598098081dd)
+![output_2](https://github.com/MRBPatel/human_activity_recogniser/assets/69763309/bb5f824c-fbc7-43ac-9cd7-7454bb617344)
+
+
+
 ## Contributing
-Contributions to this project are welcome! If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request.
+Contributions to this proje
+ct are welcome! If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request.
 
 
 Feel free to make any necessary changes to this README file to suit your project's specific details and requirements. Good luck with your Human Activity Recognizer app!
