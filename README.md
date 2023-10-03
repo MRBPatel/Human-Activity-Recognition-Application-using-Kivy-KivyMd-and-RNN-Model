@@ -53,8 +53,4 @@ Follow these steps to install and run the Human Activity Recognizer app on your 
 
 
 ## Contributing
-Contributions to this proje
-ct are welcome! If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request.
-
-
-Feel free to make any necessary changes to this README file to suit your project's specific details and requirements. Good luck with your Human Activity Recognizer app!
+Contributions to this project are welcome! If you have ideas for improvements, bug fixes, or new features, please open an issue or submit a pull request.
